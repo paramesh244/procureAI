@@ -159,7 +159,7 @@ export default function Dashboard() {
                         <div className="p-6 border-b border-slate-100">
                             <h3 className="font-bold text-xl text-slate-900">{singleProposal.vendorName}</h3>
                         </div>
-                        <div className="p-6 grid grid-cols-2 gap-6">
+                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <span className="text-sm text-slate-500 block mb-1">Total Price</span>
                                 <span className="text-lg font-medium">₹ {singleProposal.price.toLocaleString()}</span>
@@ -172,7 +172,7 @@ export default function Dashboard() {
                                 <span className="text-sm text-slate-500 block mb-1">Warranty</span>
                                 <span className="text-lg font-medium">{singleProposal.warranty}</span>
                             </div>
-                            <div className="col-span-2">
+                            <div className="col-span-1 md:col-span-2">
                                 <span className="text-sm text-slate-500 block mb-1">Notes</span>
                                 <p className="text-slate-700">{singleProposal.notes || 'No notes provided.'}</p>
                             </div>
@@ -181,41 +181,33 @@ export default function Dashboard() {
                 </div>
             ) : (
                 <>
-                    {/* Recommendation Card */}
-                    {recommendedVendorId && recommendedVendorId !== "None" && (
-                        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
-
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-2 mb-4">
-                                    <Award className="w-6 h-6 text-yellow-300" />
-                                    <span className="font-bold tracking-wider text-sm uppercase text-indigo-100">AI Recommendation</span>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <div className="flex items-center gap-4 mb-2">
+                                <div className="p-3 bg-green-100 rounded-lg text-green-600">
+                                    <Award className="w-6 h-6" />
                                 </div>
-
-                                <h3 className="text-3xl font-bold mb-2">
-                                    {recommendedProposal?.vendorName || recommendedVendorId} is the best match
-                                </h3>
-                                <p className="text-indigo-100 max-w-2xl text-lg mb-6">
-                                    {recommendedReason}
-                                </p>
-
-                                <div className="flex items-center gap-6">
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-                                        <span className="block text-xs text-indigo-200 uppercase">Score</span>
-                                        <span className="text-2xl font-bold">
-                                            {comparison.analysis.rankings.find(r => r.vendorId === recommendedVendorId)?.score || 'N/A'}/10
-                                        </span>
-                                    </div>
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-                                        <span className="block text-xs text-indigo-200 uppercase">Savings</span>
-                                        <span className="text-2xl font-bold">
-                                            ₹ {totalSavings?.toLocaleString() || 'N/A'}
-                                        </span>
-                                    </div>
+                                <div>
+                                    <p className="text-sm text-slate-500 font-medium">Recommended</p>
+                                    <p className="text-lg font-bold text-slate-900">{recommendedProposal?.vendorName}</p>
                                 </div>
                             </div>
+                            <p className="text-sm text-slate-600 mt-2">{recommendedReason}</p>
                         </div>
-                    )}
+
+                        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <div className="flex items-center gap-4 mb-2">
+                                <div className="p-3 bg-blue-100 rounded-lg text-blue-600">
+                                    <TrendingUp className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-slate-500 font-medium">Potential Savings</p>
+                                    <p className="text-lg font-bold text-slate-900">₹ {totalSavings?.toLocaleString()}</p>
+                                </div>
+                            </div>
+                            <p className="text-sm text-slate-600 mt-2">Compared to average bid</p>
+                        </div>
+                    </div>
 
                     {/* If no recommendation */}
                     {(!recommendedVendorId || recommendedVendorId === "None") && (
@@ -233,10 +225,10 @@ export default function Dashboard() {
                     {/* Comparison Table */}
                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
+                            <table className="w-full text-left border-collapse min-w-[600px]">
                                 <thead>
                                     <tr className="bg-slate-50 border-b border-slate-200">
-                                        <th className="p-4 font-semibold text-slate-500 w-1/4">Metric</th>
+                                        <th className="p-4 font-semibold text-slate-500 w-1/4 sticky left-0 bg-slate-50 z-10">Metric</th>
                                         {comparison?.proposals.map(proposal => (
                                             <th key={proposal.vendorId} className="p-4 font-semibold text-slate-900 min-w-[200px]">
                                                 {proposal.vendorName}
@@ -251,7 +243,7 @@ export default function Dashboard() {
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
                                     <tr>
-                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium">
+                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium sticky left-0 bg-white z-10">
                                             <DollarSign className="w-4 h-4" /> Total Price
                                         </td>
                                         {comparison?.proposals.map(proposal => (
@@ -266,7 +258,7 @@ export default function Dashboard() {
                                         ))}
                                     </tr>
                                     <tr>
-                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium">
+                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium sticky left-0 bg-white z-10">
                                             <Calendar className="w-4 h-4" /> Delivery
                                         </td>
                                         {comparison?.proposals.map(proposal => (
@@ -276,7 +268,7 @@ export default function Dashboard() {
                                         ))}
                                     </tr>
                                     <tr>
-                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium">
+                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium sticky left-0 bg-white z-10">
                                             <ShieldCheck className="w-4 h-4" /> Warranty
                                         </td>
                                         {comparison?.proposals.map(proposal => (
@@ -286,7 +278,7 @@ export default function Dashboard() {
                                         ))}
                                     </tr>
                                     <tr>
-                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium">
+                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium sticky left-0 bg-white z-10">
                                             <FileText className="w-4 h-4" /> Notes
                                         </td>
                                         {comparison?.proposals.map(proposal => (
@@ -296,7 +288,7 @@ export default function Dashboard() {
                                         ))}
                                     </tr>
                                     <tr>
-                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium">
+                                        <td className="p-4 flex items-center gap-2 text-slate-600 font-medium sticky left-0 bg-white z-10">
                                             <TrendingUp className="w-4 h-4" /> AI Score
                                         </td>
                                         {comparison?.proposals.map(proposal => {

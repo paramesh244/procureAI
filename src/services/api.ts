@@ -1,7 +1,6 @@
 import type { RFP, Vendor, VendorResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
- 
 
 const handleResponse = async (response: Response, defaultMessage: string) => {
     if (!response.ok) {

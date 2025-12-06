@@ -103,7 +103,7 @@ export default function NewRFP() {
                                         className="w-full p-2 border rounded-lg"
                                     />
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-slate-700 mb-1">Budget</label>
                                         <input
@@ -123,7 +123,7 @@ export default function NewRFP() {
                                         />
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-sm font-medium text-slate-700 mb-1">Payment Terms</label>
                                         <input
@@ -148,8 +148,9 @@ export default function NewRFP() {
                                     <label className="block text-sm font-medium text-slate-700 mb-2">Line Items</label>
                                     <div className="space-y-3">
                                         {editForm.items?.map((item, idx) => (
-                                            <div key={idx} className="grid grid-cols-12 gap-2 items-start">
-                                                <div className="col-span-4">
+                                            <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-2 items-start p-3 border rounded-lg md:border-none md:p-0 bg-slate-50 md:bg-transparent">
+                                                <div className="md:col-span-4">
+                                                    <label className="block text-xs font-medium text-slate-500 mb-1 md:hidden">Item Name</label>
                                                     <input
                                                         type="text"
                                                         placeholder="Item Name"
@@ -162,7 +163,8 @@ export default function NewRFP() {
                                                         className="w-full p-2 border rounded-lg text-sm"
                                                     />
                                                 </div>
-                                                <div className="col-span-2">
+                                                <div className="md:col-span-2">
+                                                    <label className="block text-xs font-medium text-slate-500 mb-1 md:hidden">Qty</label>
                                                     <input
                                                         type="number"
                                                         placeholder="Qty"
@@ -175,7 +177,8 @@ export default function NewRFP() {
                                                         className="w-full p-2 border rounded-lg text-sm"
                                                     />
                                                 </div>
-                                                <div className="col-span-5">
+                                                <div className="md:col-span-5">
+                                                    <label className="block text-xs font-medium text-slate-500 mb-1 md:hidden">Specs</label>
                                                     <input
                                                         type="text"
                                                         placeholder="Specs"
@@ -188,15 +191,16 @@ export default function NewRFP() {
                                                         className="w-full p-2 border rounded-lg text-sm"
                                                     />
                                                 </div>
-                                                <div className="col-span-1 pt-1">
+                                                <div className="md:col-span-1 pt-1 flex justify-end md:justify-start">
                                                     <button
                                                         onClick={() => {
                                                             const newItems = editForm.items?.filter((_, i) => i !== idx);
                                                             setEditForm({ ...editForm, items: newItems });
                                                         }}
-                                                        className="text-red-400 hover:text-red-600"
+                                                        className="text-red-400 hover:text-red-600 p-2 md:p-0"
                                                     >
                                                         <X className="w-5 h-5" />
+                                                        <span className="sr-only">Remove</span>
                                                     </button>
                                                 </div>
                                             </div>
